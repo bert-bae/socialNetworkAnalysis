@@ -171,6 +171,33 @@ function followNotFollow() {
 }
 // followNotFollow();
 
+function listFollowersId(userId) {
+  var result = [];
+  for (var user in data) {
+    if (data[user].follows.indexOf(userId) !== -1) {
+      result.push(user);
+    }
+  }
+  return result;
+}
+// console.log(listFollowersId("f01"));
+
+function calculateReach() {
+  for (var user in data) {
+    var reach = listFollowersId(user); // returns an array of who follows the user
+    for (var userIndex in listFollowersId(user)) {
+      var followerArray = listFollowersId(reach[userIndex]);
+      for (var i = 0; i < followerArray.length; i++) {
+        if (reach.indexOf(followerArray[i]) === -1 && followerArray[i] !== user) {
+          reach.push(followerArray[i]);
+        }
+      }
+    }
+    console.log(data[user].name + " has a reach of " + reach.length + "!");
+  }
+}
+calculateReach();
+
   // f01: {
   //   name: "Alice",
   //   age: 15,
